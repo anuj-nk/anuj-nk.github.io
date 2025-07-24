@@ -1,5 +1,9 @@
 # React + TypeScript + Vite
 
+This project now includes a simple [Astro](https://astro.build/) site used for
+the blog section. The Astro site lives in the `blog/` directory and is built
+alongside the React app.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

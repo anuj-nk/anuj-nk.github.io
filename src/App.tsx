@@ -32,11 +32,9 @@ function App() {
         </div>
         <div className="Blog" id = "Blog">
           <h2>Latest Posts</h2>
-          <ul>
-            <li><a href="#">Post 1</a></li>
-            <li><a href="#">Post 2</a></li>
-            <li><a href="#">Post 3</a></li>
-          </ul>
+          <p>
+            <a href="/blog/">Visit the Blog</a>
+          </p>
         </div>
         <div className="About" id="About">
           <h2>About Me</h2>
