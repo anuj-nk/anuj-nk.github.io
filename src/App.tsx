@@ -16,7 +16,7 @@ function App() {
   return (
     <>
       <header className={`site-header${isScrolled ? ' scrolled' : ''}`}>
-        <div className="site-title glowing-text">
+        <div className="site-titlex">
           Anuj K.
         </div>
         <nav>
