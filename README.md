@@ -56,3 +56,11 @@ export default tseslint.config({
   },
 })
 ```
+
+## Scripts
+
+Run both the React app and the Astro blog together during development:
+
+```bash
+npm run dev:all
+```
