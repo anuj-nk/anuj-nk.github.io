@@ -33,7 +33,9 @@ function App() {
         <div className="Blog" id = "Blog">
           <h2>Latest Posts</h2>
           <p>
-            <a href="/blog/">Visit the Blog</a>
+            <a href={import.meta.env.DEV ? 'http://localhost:4321/' : '/blog/'}>
+              Visit the Blog
+            </a>
           </p>
         </div>
         <div className="About" id="About">
