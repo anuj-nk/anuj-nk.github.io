@@ -7,7 +7,7 @@ import React from 'react';
  * blog is served from the /blog/ path of the built site.
  */
 function Blog() {
-  const src = import.meta.env.DEV ? 'http://localhost:4321/blog/' : '/blog/';
+  const src = import.meta.env.DEV ? 'http://localhost:5173/blog/' : '/blog/';
   return (
     <iframe
       title="Blog"
