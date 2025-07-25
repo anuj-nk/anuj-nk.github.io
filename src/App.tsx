@@ -1,7 +1,6 @@
 import './App.css'
 import React, { useState, useEffect } from 'react';
 import Home from './Home.tsx'
-import Blog from './Blog.tsx'
 
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -33,7 +32,14 @@ function App() {
         </div>
         <div className="Blog" id = "Blog">
           <h2>Latest Posts</h2>
-          <Blog />
+          <p>
+            <a href={
+              import.meta.env.DEV ? `https://${(window as any).CODESPACE_NAME}-4321.app.github.dev/blog/` :`/blog/`
+              }
+            >
+              Visit the Blog
+            </a>
+          </p>
         </div>
         <div className="About" id="About">
           <h2>About Me</h2>
