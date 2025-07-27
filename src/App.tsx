@@ -1,32 +1,13 @@
 import './App.css'
-import React, { useState, useEffect } from 'react'
-import Home from './Home.tsx'
-import Blog from './Blog.tsx'
-
+import React from 'react'
+import Header from './components/Header'
+import Home from './components/Home'
+import Blog from './components/Blog'
 function App() {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 125); // adjust threshold as needed
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
     <>
-      <header className={`site-header${isScrolled ? ' scrolled' : ''}`}>
-        <div className="site-titlex">
-          Anuj K.
-        </div>
-        <nav>
-          <a href= "#Home" className="nav-link">Home</a>
-          <a href= "#Blog" className="nav-link">Blog</a>
-          <a href= "#About" className="nav-link">About</a>
-          <a href= "#Contact" className="nav-link">Contact</a>
-        </nav>
-      </header>
+      <Header />
       <main style={{ padding: '2rem' }}>
         <div className= "Home" id = "Home">
           <Home />
