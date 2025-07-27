@@ -1,0 +1,33 @@
+---
+import Header from '../components/Header.tsx';
+import Home from '../components/Home.tsx';
+import Blog from '../components/Blog.tsx';
+import '../index.css';
+import '../App.css';
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Anuj K.</title>
+  </head>
+  <body>
+    <Header client:load />
+    <main style="padding:2rem;">
+      <div class="Home" id="Home">
+        <Home client:load />
+      </div>
+      <div class="Blog" id="Blog">
+        <Blog client:load />
+      </div>
+      <div class="About" id="About">
+        <h2>About Me</h2>
+        <p>I'm a web developer with a passion for creating engaging user experiences.</p>
+        <p>In my free time, I enjoy blogging about technology and design.</p>
+      </div>
+      <div class="Contact" id="Contact">
+        <h2>Contact Me</h2>
+        <p>If you'd like to get in touch, feel free to reach out via email or social media.</p>
+      </div>
+    </main>
+  </body>
+</html>
