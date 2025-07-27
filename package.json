@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "npm run build:blog && astro build",
-    "build:blog": "cd astro-blog && npm install && npm run build && rm -rf ../public/blog && cp -r dist ../public/blog",
+    "build:blog": "cd astro-blog && npm install && npm run build && mkdir -p ../public && rm -rf ../public/blog && cp -r dist ../public/blog",
     "preview": "astro preview",
     "astro": "astro",
     "predeploy": "npm run build",
