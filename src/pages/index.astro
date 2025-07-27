@@ -1,7 +1,7 @@
 ---
-import Header from '../components/Header.tsx';
-import Home from '../components/Home.tsx';
-import Blog from '../components/Blog.tsx';
+import Header from '../components/Header.astro';
+import Home from '../components/Home.astro';
+import Blog from '../components/Blog.astro';
 import '../index.css';
 import '../App.css';
 ---
@@ -11,13 +11,13 @@ import '../App.css';
     <title>Anuj K.</title>
   </head>
   <body>
-    <Header client:load />
+    <Header />
     <main style="padding:2rem;">
       <div class="Home" id="Home">
-        <Home client:load />
+        <Home />
       </div>
       <div class="Blog" id="Blog">
-        <Blog client:load />
+        <Blog />
       </div>
       <div class="About" id="About">
         <h2>About Me</h2>

@@ -1,0 +1,19 @@
+---
+---
+<header class="site-header">
+  <div class="site-title">Anuj K.</div>
+  <nav>
+    <a href="#Home" class="nav-link">Home</a>
+    <a href="#Blog" class="nav-link">Blog</a>
+    <a href="#About" class="nav-link">About</a>
+    <a href="#Contact" class="nav-link">Contact</a>
+  </nav>
+</header>
+<script>
+  window.addEventListener('scroll', () => {
+    const header = document.querySelector('.site-header');
+    if (header) {
+      header.classList.toggle('scrolled', window.scrollY > 125);
+    }
+  });
+</script>
