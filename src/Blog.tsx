@@ -15,6 +15,9 @@ function Blog() {
           <p>{post.content}</p>
         </article>
       ))}
+      <p>
+        Read more on my <a href="/blog/">Astro blog</a>.
+      </p>
     </div>
   )
 }

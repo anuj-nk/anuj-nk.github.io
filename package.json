@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run build:blog && vite build",
+    "build:blog": "cd astro-blog && npm install && npm run build && rm -rf ../public/blog && cp -r dist ../public/blog",
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
