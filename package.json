@@ -5,14 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "npm run build:blog && astro build",
-    "build:blog": "npm install && npm run build && rm -rf ../public/blog && cp -r dist ../public/blog",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@astrojs/rss": "^4.0.12",
     "astro": "^5.12.3"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 # Astro + React Site
 
-This project has been migrated from a plain React/Vite setup to an [Astro](https://astro.build/) site with React integration. The minimal blog found in `astro-blog` continues to be built into `public/blog` during the build step.
+This project has been migrated from a plain React/Vite setup to an [Astro](https://astro.build/) site with React integration.
 
 ## Development
 
@@ -17,7 +17,7 @@ The site is served from `localhost:4321` by Astro.
 npm run build
 ```
 
-This command builds the blog and the Astro site into the `dist` directory.
+This command builds the entire Astro site into the `dist` directory.
 
 ## Deployment
 
