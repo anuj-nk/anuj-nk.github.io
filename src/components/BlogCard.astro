@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from 'astro:content';
+const { post } = Astro.props as { post: CollectionEntry<'blog'> };
+const { title, date, description, tags, image } = post.data;
+---
+
+<article class="group overflow-hidden rounded-2xl border bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+  {image && (
+    <img
+      src={image}
+      alt={title}
+      class="h-48 w-full object-cover transition group-hover:scale-105"
+      loading="lazy"
+    />
+  )}
+
+  <div class="p-6">
+    <h2 class="mb-1 text-2xl font-semibold text-teal-800">
+      <a href={`/blog/${post.slug}`} class="hover:underline">{title}</a>
+    </h2>
+
+    <time class="mb-2 block text-sm text-zinc-500">
+      {date.toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' })}
+    </time>
+
+    <p class="mb-4 text-zinc-700">{description}</p>
+
+    <div class="flex flex-wrap gap-2">
+      {tags.map((t: unknown) => <span class="rounded-full bg-teal-100 px-2 py-1 text-xs font-medium text-teal-700">{t}</span>)}
+    </div>
+  </div>
+</article>

@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+import BlogCard from '../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+  (a: { data: { date: { getTime: () => number; }; }; }, b: { data: { date: { getTime: () => number; }; }; }) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+const pageSize = 8;
+const page = Number(Astro.url.searchParams.get('page') ?? 1);
+const paginated = posts.slice((page-1)*pageSize, page*pageSize);
+const totalPages = Math.ceil(posts.length / pageSize);
+---
+
+<Layout title="Blog">
+  <section class="mx-auto max-w-5xl px-6 py-20">
+    <h1 class="mb-12 text-center text-5xl font-extrabold text-zinc-900">
+      Blog
+    </h1>
+
+    <div class="grid gap-10 sm:grid-cols-2">
+      {paginated.map((post: unknown) => <BlogCard post={post} />)}
+    </div>
+
+    {totalPages > 1 && (
+      <nav class="mt-16 flex justify-center gap-4">
+        {Array.from({ length: totalPages }, (_, i) => i+1).map(i => (
+          <a
+            href={`/blog?page=${i}`}
+            class={`rounded px-3 py-1 ${i===page?'bg-teal-600 text-white':'bg-slate-100 text-zinc-800'} text-sm`}
+          >{i}</a>
+        ))}
+      </nav>
+    )}
+  </section>
+</Layout>
