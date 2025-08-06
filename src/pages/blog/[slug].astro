@@ -15,7 +15,7 @@ const { title, date, tags, image, description } = post.data;
 ---
 
 <Layout {title} {description}>
-  <article class="mx-auto max-w-3xl px-6 pt-35 pb-10">
+  <article class="mx-auto max-w-3xl px-6 pb-10">
     <a href="/blog" class="fas fa-angle-left py-5 mx-auto" />
     {image && (
       <img src={image} alt={title} class="mb-8 w-full rounded-xl object-cover" loading="eager" />
