@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  actions: read        # required by deploy-pages@v4
   contents: read
   pages: write
   id-token: write
@@ -13,7 +14,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -30,9 +30,9 @@ jobs:
         run: npm run build
 
       - name: Upload site artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3   # <-- bump to v3
         with:
-          path: ./dist
+          path: ./dist                          # ensure this folder exists
 
   deploy:
     needs: build
