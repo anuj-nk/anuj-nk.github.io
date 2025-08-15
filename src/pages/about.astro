@@ -2,24 +2,61 @@
 import Layout from "../layouts/Layout.astro"
 ---
 
-<Layout title = "About">
-    <section class="max-w-3xl mx-auto px-6 py-10 text-center">
-        <h1 class="text-4xl font-bold mb-6">About Me</h1>
+<Layout title="About">
+  <main class="min-h-screen bg-gradient-to-b from-teal-50 via-stone-100 to-white">
+    <section class="max-w-3xl mx-auto px-6 py-16">
+      <div class="bg-white/80 backdrop-blur rounded-2xl shadow-lg ring-1 ring-black/5 p-8 sm:p-12 text-center">
+        <h1 class="text-4xl font-bold tracking-tight text-zinc-900 mb-8">About Me</h1>
 
-        <p class="mb-6">
-        Hello! I’m <strong>Anuj</strong>
+        <figure>
+          <img
+            src="/assets/about/headshot.jpg"
+            alt="Headshot of Anuj Kamasamudram"
+            class="mx-auto w-40 h-40 sm:w-48 sm:h-48 rounded-full object-cover shadow-md ring-1 ring-black/10 transition hover:scale-[1.02]"
+            width="192"
+            height="192"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+
+        <p class="mt-6 text-lg text-zinc-700">
+          Hello! I’m <strong>Anuj</strong>
         </p>
 
-        <h2 class="text-2xl font-semibold mb-4">WORK IN PROGRESS :)</h2>
-        <p class="mb-6">
-        This entire page is still a work in progress haha
-        </p>
+        <div class="my-10 h-px bg-gradient-to-r from-transparent via-zinc-200 to-transparent"></div>
 
-        <h2 class="text-2xl font-semibold mb-4"><a href="mailto:anujkamasamudram@gmail.com">Contact Me</a></h2>
-        </p>
+        <section aria-labelledby="my-story">
+          <h2 id="my-story" class="text-2xl font-semibold text-zinc-900 mb-3">My Story</h2>
+          <p class="text-zinc-600 leading-relaxed">
+            Born and brought up in Arizona. I have no passions yet all at the same time. If you're interested in what I have to say or do, then you might've just found the right space. If you're interested in contacting me, even better.
+          </p>
+        </section>
 
-        <p class="mt-8 italic text-zinc-500">
-        “Curiosity didn’t kill the cat. It built the app.” 🚀
-        </p>
+        <section class="mt-10" aria-labelledby="contact">
+          <h2 id="contact" class="text-2xl font-semibold text-zinc-900 mb-4">Get in touch</h2>
+          <div class="flex flex-col sm:flex-row gap-3 justify-center">
+            <a
+              href="mailto:anujkamasamudram@gmail.com"
+              class="inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2"
+            >
+              Personal Email
+            </a>
+            <a
+              href="mailto:ankamasa@asu.edu"
+              class="inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-teal-700 ring-1 ring-teal-600/30 hover:bg-teal-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2"
+            >
+              Professional Email
+            </a>
+          </div>
+        </section>
+
+        <figure class="mt-12">
+          <blockquote class="italic text-zinc-500">
+            Check out my socials linked in the footer
+          </blockquote>
+        </figure>
+      </div>
     </section>
+  </main>
 </Layout>
