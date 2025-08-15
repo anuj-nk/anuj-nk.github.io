@@ -24,7 +24,7 @@ const totalPages = Math.ceil(rest.length / pageSize);
 
     {pinned.length > 0 && (
       <>
-        <h2 class="mb-6 text-2xl font-bold">📌 Pinned</h2>
+        <h2 class="mb-6 text-2xl font-bold">Pinned</h2>
         <div class="grid gap-10 sm:grid-cols-2 mb-16">
           {pinned.map((post: unknown) => <BlogCard post={post} pinned />)}
         </div>
