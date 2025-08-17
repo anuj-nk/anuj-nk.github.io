@@ -1,13 +1,139 @@
-<!DOCTYPE html><html lang="en" data-astro-transition-scope="astro-smooz4hq-1"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="stylesheet" href="/_astro/about.A6uUveiW.css"><style>[data-astro-transition-scope="astro-smooz4hq-1"] { view-transition-name: astro-smooz4hq-1; }</style></head> <meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.DZnDNxNb.js"></script> <header class="sticky top-0 z-50 flex justify-between items-center
-         px-24 py-12 max-sm:px-5 max-sm:py-10
-         w-full bg-gradient-to-b from-slate-50 to-teal-50"> <a href="/" class="flex items-center gap-x-4"> <p class="uppercase text-3xl text-zinc-900">anuj</p> </a> <ul class="flex gap-x-8"> <li><a href="/" class="text-teal-900 font-bold">Home</a></li> <li><a href="/blog" class="text-teal-900 font-bold">Blog</a></li> <li><a href="/about" class="text-teal-900 font-bold">About</a></li> </ul> </header>  <section class="w-full min-h-screen flex flex-col justify-center items-center px-6 text-center bg-gradient-to-b from-teal-50 to-stone-200"> <h1 class="text-4xl sm:text-5xl font-bold text-zinc-900 mb-6">
-Welcome to the Blog
+<!DOCTYPE html><html lang="en" data-astro-transition-scope="astro-smooz4hq-1"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="stylesheet" href="/_astro/about.DH3guI0B.css"><style>[data-astro-transition-scope="astro-smooz4hq-1"] { view-transition-name: astro-smooz4hq-1; }</style></head> <meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.DZnDNxNb.js"></script> <header class="sticky top-0 z-50 flex items-center justify-between px-24 py-12 max-sm:px-5 max-sm:py-10 w-full bg-gradient-to-b from-slate-50 to-teal-50"> <a href="/" class="flex items-center gap-x-4"> <p class="uppercase text-3xl text-zinc-900">anuj</p> </a> <div class="flex items-center gap-6"> <div id="np_inline_tkyf3qk" class="min-w-0 hidden sm:inline-flex max-w-[16rem]" aria-live="polite"> <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full
+              bg-white/80 backdrop-blur ring-1 ring-black/5 shadow-sm
+              text-sm text-zinc-700"> <span class="inline-block w-2 h-2 rounded-full bg-zinc-300 animate-pulse"></span> <span class="truncate max-w-[12rem]">Loading…</span> </div> </div> <script>(function(){const ID = "np_inline_tkyf3qk";
+const ENDPOINT = "https://now-playing.anujnk.workers.dev";
+
+  (function () {
+    const root = document.getElementById(ID);
+    if (!root) return;
+    const el = root.firstElementChild;
+
+    function renderError(msg="Spotify unavailable") {
+      el.innerHTML = `
+        <span class="inline-block w-2 h-2 rounded-full bg-red-500"></span>
+        <span class="truncate max-w-[12rem] text-red-600">${msg}</span>`;
+    }
+
+    function render(data) {
+      if (!data?.isPlaying || !data?.title) {
+        el.innerHTML = `
+          <span class="inline-block w-2 h-2 rounded-full bg-zinc-300"></span>
+          <span class="truncate max-w-[12rem] text-zinc-500">Not playing</span>`;
+        return;
+      }
+      const text = data.artist ? `${data.title} — ${data.artist}` : data.title;
+      el.innerHTML = `
+        <a href="${data.songUrl || '#'}" target="_blank" rel="noopener"
+           class="group inline-flex items-center gap-2">
+          <span class="inline-block w-2 h-2 rounded-full bg-teal-500 animate-pulse"></span>
+          <span class="truncate max-w-[12rem] group-hover:underline">${text}</span>
+        </a>`;
+      el.title = text;
+    }
+
+    async function load() {
+      try {
+        if (!ENDPOINT) throw new Error("Missing PUBLIC_NOW_PLAYING_URL");
+        const res = await fetch(ENDPOINT, { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const json = await res.json();
+        render(json);
+      } catch (e) {
+        console.error("[NowPlayingInline] fetch error:", e);
+        renderError();
+      }
+    }
+
+    // fetch on first paint
+    load();
+    // fetch again after Astro client-side navs (if enabled)
+    document.addEventListener("astro:page-load", load);
+
+    // poll every 30s (avoid duplicate intervals in dev/HMR)
+    let interval = setInterval(load, 30000);
+    if (import.meta.hot) {
+      import.meta.hot.dispose(() => clearInterval(interval));
+    }
+  })();
+})();</script> <ul class="flex gap-x-8"> <li><a href="/" class="text-teal-900 font-bold">Home</a></li> <li><a href="/blog" class="text-teal-900 font-bold">Blog</a></li> <li><a href="/about" class="text-teal-900 font-bold">About</a></li> </ul> </div> </header>  <section class="w-full min-h-screen flex flex-col justify-center items-center px-6 text-center bg-gradient-to-b from-teal-50 to-stone-200"> <h1 class="text-4xl sm:text-5xl font-bold text-zinc-900 mb-6">
+Welcome to my Personal Website
 </h1> <p class="text-lg text-zinc-600 max-w-2xl mx-auto mb-10">
-The website is a work in progress while I get all my ideas set up. Right now, the blog should be working, and I will begin updating it :).
-</p> <div class="flex flex-col sm:flex-row gap-4 justify-center"> <a href="/blog" class="px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition">
-Read the Blog
-</a> <a href="/about" class="px-6 py-3 border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-50 transition">
-About Me
-</a> </div> </section>  <footer class="mx-auto flex flex-nowrap items-center gap-x-6 justify-center py-4 bg-stone-200"> <p class="text-xs text-zinc-700 whitespace-nowrap">
+The website is a work in progress while I get all my ideas set up. Right now, the blog and about page should be working, and I will begin updating them soon :) <br> My socials are linked in the footer !!
+</p> <div class="flex flex-col sm:flex-row gap-4 justify-center"> <a href="/blog" class="px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition">Read the Blog</a> <a href="/about" class="px-6 py-3 border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-50 transition">About Me</a> </div> <div id="np_card_1r8dyua" class="w-full max-w-md mt-12" aria-live="polite"> <div class="h-[76px] rounded-xl bg-zinc-200/60 animate-pulse"></div> </div> <script>(function(){const ID = "np_card_1r8dyua";
+const ENDPOINT = "https://now-playing.anujnk.workers.dev";
+
+  (function () {
+    const root = document.getElementById(ID);
+    if (!root) return;
+
+    const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+
+    function renderError() {
+      root.innerHTML = `<div class="p-4 rounded-xl ring-1 ring-black/5 bg-white/70 text-red-600">Couldn’t load Spotify.</div>`;
+    }
+
+    function render(data) {
+      if (!data?.isPlaying || !data?.title) {
+        root.innerHTML = `
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-white/70 backdrop-blur ring-1 ring-black/5 shadow-sm">
+            <div class="w-12 h-12 rounded bg-zinc-200 flex items-center justify-center">
+              <span class="text-zinc-400 text-lg">♪</span>
+            </div>
+            <div class="text-left">
+              <p class="font-medium text-zinc-800">Not playing right now</p>
+              <p class="text-sm text-zinc-500">Spotify is paused</p>
+            </div>
+          </div>`;
+        return;
+      }
+
+      const pct = data.durationMs ? clamp(Math.round((data.progressMs / data.durationMs) * 100), 0, 100) : 0;
+
+      root.innerHTML = `
+        <a href="${data.songUrl || '#'}" target="_blank" rel="noopener" class="group block">
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-white/80 backdrop-blur ring-1 ring-black/5 shadow-sm transition hover:shadow-md">
+            ${data.albumImageUrl
+              ? `<img src="${data.albumImageUrl}" alt="Album art for ${data.title}" class="w-12 h-12 rounded" loading="lazy" decoding="async" />`
+              : `<div class="w-12 h-12 rounded bg-zinc-200"></div>`}
+            <div class="min-w-0 flex-1 text-left">
+              <div class="inline-flex items-center gap-1 rounded-full bg-teal-50 text-teal-700 text-xs px-2 py-0.5 ring-1 ring-teal-600/20">
+                <span class="w-1.5 h-1.5 rounded-full bg-teal-500 animate-pulse"></span>
+                Listening now
+              </div>
+              <p class="mt-1 font-medium text-zinc-900 truncate">${data.title}</p>
+              <p class="text-sm text-zinc-600 truncate">${data.artist || ""}${data.album ? ` • ${data.album}` : ""}</p>
+              <div class="mt-2 h-1 w-full rounded bg-zinc-200/70 overflow-hidden">
+                <div class="h-full bg-teal-500/70" style="width:${pct}%"></div>
+              </div>
+            </div>
+          </div>
+        </a>`;
+    }
+
+    async function load() {
+      try {
+        if (!ENDPOINT) throw new Error("Missing PUBLIC_NOW_PLAYING_URL");
+        const res = await fetch(ENDPOINT, { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const json = await res.json();
+        render(json);
+      } catch (e) {
+        console.error("[NowPlayingCard] fetch error:", e);
+        renderError();
+      }
+    }
+
+    // fetch on first paint
+    load();
+    // fetch again after Astro client-side navs (if enabled)
+    document.addEventListener("astro:page-load", load);
+
+    // poll every 30s (avoid duplicate intervals in dev/HMR)
+    let interval = setInterval(load, 30000);
+    if (import.meta.hot) {
+      import.meta.hot.dispose(() => clearInterval(interval));
+    } 
+  })();
+})();</script> </section>  <footer class="mx-auto flex flex-nowrap items-center gap-x-6 justify-center py-4 bg-stone-200"> <p class="text-xs text-zinc-700 whitespace-nowrap">
 ©2025 Anuj Nathan Kamasamudram. All Rights Reserved.
 </p> <div class="flex gap-4"> <a href="https://github.com/anuj-nk" target="_blank" rel="noopener noreferrer" aria-label="View my GitHub" class="p-2 bg-gray-100 rounded-full hover:bg-teal-100 transition-colors transform hover:scale-110 duration-200"> <img src="/assets/footer/github-mark.svg" alt="GitHub Logo" class="w-6 h-6 grayscale hover:grayscale-0 transition-all"> </a> <a href="https://linkedin.com/in/anuj-kamasamudram" target="_blank" rel="noopener noreferrer" aria-label="View my LinkedIn" class="p-2 bg-gray-100 rounded-full hover:bg-teal-100 transition-colors transform hover:scale-110 duration-200"> <img src="/assets/footer/LinkedIn_icon.svg" alt="LinkedIn Logo" class="w-6 h-6 grayscale hover:grayscale-0 transition-all"> </a> <a href="https://instagram.com/anuj.nk" target="_blank" rel="noopener noreferrer" aria-label="Check out my Instagram" class="p-2 bg-gray-100 rounded-full hover:bg-teal-100 transition-colors transform hover:scale-110 duration-200"> <img src="/assets/footer/Instagram_icon.png" alt="LinkedIn Logo" class="w-6 h-6 grayscale hover:grayscale-0 transition-all"> </a> </div> </footer> </html>

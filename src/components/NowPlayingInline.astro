@@ -1,0 +1,66 @@
+---
+interface Props { class?: string }
+const { class: className = "" } = Astro.props;
+
+// Build-time env read
+const ENDPOINT: string = import.meta.env.PUBLIC_NOW_PLAYING_URL || "";
+const ID = "np_inline_" + Math.random().toString(36).slice(2, 9);
+---
+
+<div id={ID} class={`min-w-0 ${className}`} aria-live="polite">
+  <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full
+              bg-white/80 backdrop-blur ring-1 ring-black/5 shadow-sm
+              text-sm text-zinc-700">
+    <span class="inline-block w-2 h-2 rounded-full bg-zinc-300 animate-pulse"></span>
+    <span class="truncate max-w-[12rem]">Loading…</span>
+  </div>
+</div>
+
+<script is:inline define:vars={{ ID, ENDPOINT }}>
+  (function () {
+    const root = document.getElementById(ID);
+    if (!root) return;
+    const el = root.firstElementChild;
+
+    function renderError(msg="Spotify unavailable") {
+      el.innerHTML = `
+        <span class="inline-block w-2 h-2 rounded-full bg-red-500"></span>
+        <span class="truncate max-w-[12rem] text-red-600">${msg}</span>`;
+    }
+
+    function render(data) {
+      if (!data || !data.isPlaying || !data.title) {
+        el.innerHTML = `
+          <span class="inline-block w-2 h-2 rounded-full bg-zinc-300"></span>
+          <span class="truncate max-w-[12rem] text-zinc-500">Not playing</span>`;
+        return;
+      }
+      const text = data.artist ? `${data.title} — ${data.artist}` : data.title;
+      el.innerHTML = `
+        <a href="${data.songUrl || '#'}" target="_blank" rel="noopener"
+           class="group inline-flex items-center gap-2">
+          <span class="inline-block w-2 h-2 rounded-full bg-teal-500 animate-pulse"></span>
+          <span class="truncate max-w-[12rem] group-hover:underline">${text}</span>
+        </a>`;
+      el.title = text;
+    }
+
+    async function load() {
+      try {
+        if (!ENDPOINT) throw new Error("Missing PUBLIC_NOW_PLAYING_URL");
+        const res = await fetch(ENDPOINT, { cache: "no-store" });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const json = await res.json();
+        render(json);
+      } catch (e) {
+        console.error("[NowPlayingInline] fetch error:", e);
+        renderError();
+      }
+    }
+
+    // initial fetch
+    load();
+    // fetch again after client-side navs (if enabled)
+    document.addEventListener("astro:page-load", load);
+  })();
+</script>

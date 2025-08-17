@@ -1,0 +1,81 @@
+---
+interface Props { class?: string }
+const { class: className = "" } = Astro.props;
+
+// Build-time env read
+const ENDPOINT: string = import.meta.env.PUBLIC_NOW_PLAYING_URL || "";
+const ID = "np_card_" + Math.random().toString(36).slice(2, 9);
+---
+
+<div id={ID} class={`w-full max-w-md ${className}`} aria-live="polite">
+  <div class="h-[76px] rounded-xl bg-zinc-200/60 animate-pulse"></div>
+</div>
+
+<script is:inline define:vars={{ ID, ENDPOINT }}>
+  (function () {
+    const root = document.getElementById(ID);
+    if (!root) return;
+
+    const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+
+    function renderError(msg="Couldn’t load Spotify.") {
+      root.innerHTML = `<div class="p-4 rounded-xl ring-1 ring-black/5 bg-white/70 text-red-600">${msg}</div>`;
+    }
+
+    function render(data) {
+      if (!data || !data.isPlaying || !data.title) {
+        root.innerHTML = `
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-white/70 ring-1 ring-black/5">
+            <div class="w-12 h-12 rounded bg-zinc-200 flex items-center justify-center">
+              <span class="text-zinc-400 text-lg">♪</span>
+            </div>
+            <div class="text-left">
+              <p class="font-medium text-zinc-800">Not playing right now</p>
+              <p class="text-sm text-zinc-500">Spotify is paused</p>
+            </div>
+          </div>`;
+        return;
+      }
+
+      const pct = data.durationMs ? clamp(Math.round((data.progressMs / data.durationMs) * 100), 0, 100) : 0;
+
+      root.innerHTML = `
+        <a href="${data.songUrl || '#'}" target="_blank" rel="noopener" class="group block">
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-white/80 ring-1 ring-black/5 hover:shadow-md transition">
+            ${data.albumImageUrl
+              ? `<img src="${data.albumImageUrl}" alt="Album art for ${data.title}" class="w-12 h-12 rounded" loading="lazy" decoding="async" />`
+              : `<div class="w-12 h-12 rounded bg-zinc-200"></div>`}
+            <div class="min-w-0 flex-1 text-left">
+              <div class="inline-flex items-center gap-1 rounded-full bg-teal-50 text-teal-700 text-xs px-2 py-0.5 ring-1 ring-teal-600/20">
+                <span class="w-1.5 h-1.5 rounded-full bg-teal-500 animate-pulse"></span>
+                Listening now
+              </div>
+              <p class="mt-1 font-medium text-zinc-900 truncate">${data.title}</p>
+              <p class="text-sm text-zinc-600 truncate">${data.artist || ""}${data.album ? ` • ${data.album}` : ""}</p>
+              <div class="mt-2 h-1 w-full rounded bg-zinc-200/70 overflow-hidden">
+                <div class="h-full bg-teal-500/70" style="width:${pct}%"></div>
+              </div>
+            </div>
+          </div>
+        </a>`;
+    }
+
+    async function load() {
+      try {
+        if (!ENDPOINT) throw new Error("Missing PUBLIC_NOW_PLAYING_URL");
+        const res = await fetch(ENDPOINT, { cache: "no-store" });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const json = await res.json();
+        render(json);
+      } catch (e) {
+        console.error("[NowPlayingCard] fetch error:", e);
+        renderError();
+      }
+    }
+
+    // initial fetch
+    load();
+    // fetch again after client-side navs (if enabled)
+    document.addEventListener("astro:page-load", load);
+  })();
+</script>
