@@ -1,7 +1,7 @@
 ---
 title: "Incompetence and my Experience with Idiocracy"
 description: "I am venting"
-date:   2025-08-04
+date:   2025-09-04
 tags: ["rant", "personal"]
 image: "/assets/blog/charlie_day.jpg"
 pinned: false
