@@ -4,7 +4,7 @@ description: "Thoughts on why I started this space."
 date:   2025-07-30
 tags: ["announcement", "personal"]
 image: "/assets/blog/launch.jpg"
-pinned: true
+pinned: false
 ---
 
 Welcome! This blog has been a "minor" side project I have been working on this month in my free time. Those who know me will recognize the perplexity in my decision to do this. For one, I am not known as a good writer. At least, writing has never been something I'm particularly good at. Although others who create blogs, especially in the tech industry, use it as a portfolio showcase and a platform to discuss technology, it doesn't seem entirely necessary to have excellent writing skills to start a blog. But I want to use this platform to discuss a lot more than simply technology (and hopefully improve my writing skills).

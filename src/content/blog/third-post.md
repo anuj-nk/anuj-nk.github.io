@@ -4,7 +4,7 @@ description: "Life update for me on September 18th, 2025"
 date:   2025-09-18
 tags: ["announcement", "personal"]
 image: "/assets/blog/seattle.jpeg"
-pinned: false
+pinned: true
 ---
 
 “I like work: it fascinates me. I can sit and look at it for hours.” ― Jerome K. Jerome
