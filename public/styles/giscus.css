@@ -1,39 +1,24 @@
-/* src/styles/giscus.css */
 :root {
-  --color-neutral-900: #0b1020; /* deep zinc-ish for strong text */
-  --color-neutral-700: #3f3f46; /* zinc-700 */
-  --color-neutral-600: #52525b; /* zinc-600 */
-  --color-neutral-200: #e5e7eb; /* zinc-200 */
-  --color-neutral-100: #f4f4f5; /* zinc-100 */
+  /* High-contrast light */
+  --giscus-body-background: #ffffff;      /* not transparent */
+  --giscus-color-text: #0b1020;           /* near zinc-900 */
+  --giscus-color-secondary: #3f3f46;      /* zinc-700 */
+  --giscus-color-tertiary: #52525b;       /* zinc-600 */
+  --giscus-color-border: rgba(0,0,0,.08);
+  --giscus-color-input-border: rgba(0,0,0,.12);
 
-  --color-accent-600: #0f766e; /* teal-700-ish */
-  --color-accent-500: #14b8a6; /* teal-500 */
-  --color-accent-100: #ccfbf1; /* teal-100 */
-
-  --giscus-font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-
-  --giscus-body-background: transparent;               /* we style card outside */
-  --giscus-color-text: var(--color-neutral-900);
-  --giscus-color-secondary: var(--color-neutral-700);
-  --giscus-color-tertiary: var(--color-neutral-600);
-
-  --giscus-color-accent: var(--color-accent-600);
-  --giscus-color-placeholder: var(--color-neutral-600);
-  --giscus-color-input-border: rgba(0,0,0,0.08);
-  --giscus-color-border: rgba(0,0,0,0.08);
-
+  --giscus-color-accent: #0f766e;         /* teal-700-ish */
   --giscus-color-btn-text: #ffffff;
-  --giscus-color-btn-bg: var(--color-accent-600);
-  --giscus-color-btn-hover-bg: var(--color-accent-500);
+  --giscus-color-btn-bg: #0f766e;
+  --giscus-color-btn-hover-bg: #14b8a6;
 
-  --giscus-color-badge-text: var(--color-accent-600);
-  --giscus-color-badge-bg: rgba(20,184,166,0.12);
+  --giscus-color-badge-text: #0f766e;
+  --giscus-color-badge-bg: rgba(20,184,166,.12);
 
-  --giscus-color-markdown-link: var(--color-accent-600);
-  --giscus-color-markdown-code-bg: var(--color-neutral-100);
+  --giscus-color-markdown-link: #0f766e;
+  --giscus-color-markdown-code-bg: #f4f4f5; /* zinc-100 */
 }
 
-/* Small polish */
 .giscus, .giscus-frame {
-  font-family: var(--giscus-font-family) !important;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji" !important;
 }
