@@ -59,26 +59,4 @@ const {
         async
     ></script>
   </div>
-</section>
-
-<script is:inline>
-  const LIGHT = "/styles/giscus-light.css";
-  const DARK  = "/styles/giscus-dark.css";
-
-  function currentThemePath() {
-    // If you add dark mode, detect it here; otherwise always LIGHT.
-    const isDark = document.documentElement.classList.contains('dark');
-    return isDark ? DARK : LIGHT;
-  }
-
-  function syncGiscus() {
-    const frame = document.querySelector('iframe.giscus-frame');
-    frame?.contentWindow?.postMessage(
-      { giscus: { setConfig: { theme: currentThemePath(), mapping: "pathname" } } },
-      "https://giscus.app"
-    );
-  }
-
-  document.addEventListener("astro:page-load", syncGiscus);
-  window.addEventListener("popstate", syncGiscus);
-</script>
+</section>=
