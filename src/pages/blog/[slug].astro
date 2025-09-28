@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import Comments from "../../components/Comments.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -34,4 +35,12 @@ const { title, date, tags, image, description } = post.data;
       <Content />
     </div>
   </article>
+  <Comments
+    repo="anuj-nk/anuj-nk.github.io"
+    repoId="R_kgDOO-p9mA"
+    category="Comments"
+    categoryId="DIC_kwDOO-p9mM4Cv-pc"
+    mapping="pathname"
+  />
 </Layout>
+

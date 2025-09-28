@@ -1,0 +1,61 @@
+---
+/**
+ * Props you'll copy from giscus.app
+ * repo, repoId, category, categoryId are required.
+ */
+interface Props {
+  repo: "anuj-nk/anuj-nk.github.io";
+  repoId: "R_kgDOO-p9mA";
+  category?: "Comments";
+  categoryId: "DIC_kwDOO-p9mM4Cv-pc";
+  mapping?: "pathname" | "url" | "title" | "og:title" | "specific";
+  strict?: "0" | "1";
+  reactions?: "0" | "1";
+  metadata?: "0" | "1";
+  inputPosition?: "top" | "bottom";
+  lang?: string;
+}
+
+const {
+  repo,
+  repoId,
+  category = "Comments",
+  categoryId,
+  mapping = "pathname",
+  strict = "1",
+  reactions = "1",
+  metadata = "0",
+  inputPosition = "bottom",
+  lang = "en",
+} = Astro.props;
+---
+
+<section
+  id="comments"
+  class="mt-16 max-w-3xl mx-auto"
+  aria-labelledby="comments-title"
+>
+  <h2 id="comments-title" class="mb-4 text-2xl font-semibold text-zinc-900">
+    Comments
+  </h2>
+
+  <!-- Card wrapper to match your site (like BlogCard) -->
+  <div class="rounded-2xl bg-white/80 ring-1 ring-black/5 shadow-sm p-4 sm:p-6">
+    <script
+      src="https://giscus.app/client.js"
+      data-repo={repo}
+      data-repo-id={repoId}
+      data-category={category}
+      data-category-id={categoryId}
+      data-mapping={mapping}
+      data-strict={strict}
+      data-reactions-enabled={reactions}
+      data-emit-metadata={metadata}
+      data-input-position={inputPosition}
+      data-theme="/styles/giscus.css"
+      data-lang={lang}
+      crossorigin="anonymous"
+      async
+    ></script>
+  </div>
+</section>

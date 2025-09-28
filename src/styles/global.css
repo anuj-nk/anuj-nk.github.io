@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*) { animation-duration: 1ms; }
+}
+
+::view-transition-old(page) { animation: vt-page-out 180ms ease both; }
+::view-transition-new(page) { animation: vt-page-in  220ms ease 40ms both; }
+
+@keyframes vt-page-out { to { opacity: 0; transform: translateY(4px); } }
+@keyframes vt-page-in  { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+::view-transition-old(chrome) { animation: vt-chrome-out 120ms ease both; }
+::view-transition-new(chrome) { animation: vt-chrome-in  160ms ease both; }
+
+@keyframes vt-chrome-out { to { opacity: .85 } }
+@keyframes vt-chrome-in  { from { opacity: .85 } to { opacity: 1 } } 

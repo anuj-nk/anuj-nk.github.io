@@ -1,22 +1,29 @@
 ---
 import '../styles/global.css';
 import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro"
-import { ClientRouter } from "astro:transitions";
+import Footer from "../components/Footer.astro";
+import { ClientRouter, fade } from "astro:transitions";
+
+const { title = "Anuj" } = Astro.props;
 ---
-
 <!doctype html>
-<html lang="en" transition:animate="initial">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-	</head>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <ClientRouter />
+  </head>
 
-	<ClientRouter />
+  <body class="min-h-screen bg-white">
+    <!-- Persist header/footer, give them a NAME for CSS, and (optionally) a gentle fade -->
+    <Header transition:persist transition:name="chrome" transition:animate={fade({ duration: "160ms" })} />
 
-	<body>
-		<Header />
-		<slot />
-		<Footer />
-	</body>
+    <!-- Name your main content 'page' and give it a slightly longer fade -->
+    <main id="page" transition:name="page" transition:animate={fade({ duration: "220ms"})} class="min-h-[60vh]">
+      <slot />
+    </main>
+
+    <Footer transition:persist transition:name="chrome" transition:animate={fade({ duration: "160ms" })} />
+  </body>
 </html>
