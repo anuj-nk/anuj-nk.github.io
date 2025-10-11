@@ -1,7 +1,7 @@
 ---
 title: "I am a Zombie and My Brain is Goo"
 description: "I am not ACTUALLY a Zombie and My Brain is not ACTUALY Goo. Anyways, Social Media and it's infleunce on society and me."
-date:   2025-08-20
+date:   2025-10-10
 tags: ["personal", "research"]
 image: "/assets/blog/brainrot.jpg"
 pinned: true
