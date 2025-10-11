@@ -16,7 +16,7 @@ const { title, date, tags, image, description } = post.data;
 ---
 
 <Layout {title} {description}>
-  <article class="mx-auto max-w-3xl px-6 pb-10">
+  <article class="mx-auto max-w-3xl px-6 pb-20">
     <a href="/blog" class="fas fa-angle-left py-5 mx-auto" />
     {image && (
       <img src={image} alt={title} class="mb-8 w-full rounded-xl object-cover" loading="eager" />
@@ -34,13 +34,13 @@ const { title, date, tags, image, description } = post.data;
     <div class="prose prose-teal max-w-none">
       <Content />
     </div>
+    <Comments
+      repo="anuj-nk/anuj-nk.github.io"
+      repoId="R_kgDOO-p9mA"
+      category="Comments"
+      categoryId="DIC_kwDOO-p9mM4Cv-pc"
+      mapping="pathname"
+    />
   </article>
-  <Comments
-    repo="anuj-nk/anuj-nk.github.io"
-    repoId="R_kgDOO-p9mA"
-    category="Comments"
-    categoryId="DIC_kwDOO-p9mM4Cv-pc"
-    mapping="pathname"
-  />
 </Layout>
 

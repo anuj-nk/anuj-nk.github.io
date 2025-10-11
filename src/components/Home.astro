@@ -2,31 +2,111 @@
 import NowPlayingCard from "../components/NowPlayingCard.astro";
 import BlogCard from "../components/BlogCard.astro";
 import { getCollection } from "astro:content";
+import InterestCarousel from "../components/InterestCarousel.astro";
 
 const posts = (await getCollection("blog")).sort(
-  (a: { data: { date: { getTime: () => number; }; }; }, b: { data: { date: { getTime: () => number; }; }; }) => b.data.date.getTime() - a.data.date.getTime()
+  (a: { data: { date: { getTime: () => number } } }, b: { data: { date: { getTime: () => number } } }) =>
+    b.data.date.getTime() - a.data.date.getTime()
 );
 
-const pinned = posts.filter((p: { data: { pinned: any; }; }) => p.data.pinned);
+const pinned = posts.filter((p: { data: { pinned: any } }) => p.data.pinned);
 const featured = pinned[0] ?? posts[0];
-const more = posts.filter((p: { slug: any; }) => p.slug !== featured?.slug).slice(0, 2);
+const more = posts.filter((p: { slug: any }) => p.slug !== featured?.slug).slice(0, 2);
+
+const me = {
+  name: "Anuj Kamasamudram",
+  tagline: "UW MSTI student",
+  email: "mailto:anujkamasamudram@gmail.com",
+  resumeUrl: "/assets/resume.pdf",
+  photo: "/assets/home/me.jpeg",
+  links: [
+    { label: "Resume", href: "/assets/resume.pdf" },
+    { label: "Email", href: "mailto:anujkamasamudram@gmail.com" },
+    { label: "Blog", href: "/blog" },
+  ],
+  workingOn: [
+    "Mooncake Plaster Designs",
+    "Personal site haha",
+  ],
+  interests: ["Basketball", "Music", "Dosa", "Gaming", "Business", "Ice Cream", "Coffee", "Cooking", "Blogging"],
+  songFormUrl: "https://forms.gle/F27gKxA4T4HxEvEr6"
+};
 ---
 
-<main class="min-h-screen bg-gradient-to-b from-teal-50 via-white to-stone-200">
-  <section class="w-full min-h-[60vh] flex flex-col justify-center items-center px-6 text-center">
-    <h1 class="text-4xl sm:text-5xl font-bold text-zinc-900 mb-4">
-      Welcome to my Personal Website
-    </h1>
+<main class="relative z-10 min-h-screen">
+  <section class="relative mx-auto max-w-5xl px-6 pt-6">
 
-    <p class="text-lg text-zinc-600 max-w-2xl mx-auto mb-8">
-      Work in progress — the blog & about page are live. More coming soon :)
-    </p>
+  <div class="grid gap-6 md:grid-cols-2 rounded-2xl ring-1 ring-black/10 bg-white/70 backdrop-blur shadow-lg p-6 sm:p-8">
+    <div class="flex flex-col gap-5">
+      <img
+          src={me.photo}
+          alt={`Photo of ${me.name}`}
+          class="h-40 w-40 sm:h-28 sm:w-28 md:h-50 md:w-70 rounded-2xl object-cover ring-1 ring-black/10 shadow"
+          width="144"
+          height="144"
+          loading="eager"
+          decoding="async"
+        />
+      <div class="flex items-center gap-5">
+        <div>
+          <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900">{me.name}</h1>
+          <p class="mt-1 text-sm sm:text-base text-zinc-600">{me.tagline}</p>
+        </div>
+      </div>
+      <InterestCarousel items={me.interests} speed={22} />
 
-    <NowPlayingCard class="mt-10" />
+      <div class="flex flex-wrap gap-3 pt-1">
+        {me.links.map((l) => (
+          <a href={l.href} class="inline-flex items-center rounded-lg px-3 py-2 text-sm font-medium text-white bg-teal-600 hover:bg-teal-700">
+            {l.label}
+          </a>
+        ))}
+      </div>
+
+      <p class="mt-1 text-sm text-zinc-500">
+        Based in Seattle.
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-4">
+      <div class="rounded-xl ring-1 ring-black/10 bg-white/80 p-4">
+        <NowPlayingCard />
+      </div>
+
+      <div class="rounded-xl ring-1 ring-black/10 bg-white/80 p-4">
+        <h3 class="mb-2 text-sm font-semibold text-zinc-700">Suggest a song</h3>
+        <p class="text-sm text-zinc-600 mb-3">Improve my Music Taste</p>
+        <div class="flex gap-2">
+          <input
+            type="text"
+            placeholder="Song or Spotify link"
+            class="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+          />
+          <a href={me.songFormUrl} class="rounded-lg bg-teal-600 px-3 py-2 text-sm font-medium text-white hover:bg-teal-700">
+            Send
+          </a>
+        </div>
+      </div>
+
+      <div class="rounded-xl ring-1 ring-black/10 bg-white/80 p-4">
+        <h3 class="mb-2 text-sm font-semibold text-zinc-700">Working on rn</h3>
+        <ul class="space-y-2">
+          {me.workingOn.map((w) => (
+            <li class="flex items-start gap-2">
+              <span class="mt-1 h-1.5 w-1.5 rounded-full bg-teal-500"></span>
+              <span class="text-sm text-zinc-700">{w}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
   </section>
 
+
+
   {featured && (
-    <section class="mx-auto max-w-6xl px-6 py-14">
+    <section id="from-the-blog" class="relative mx-auto max-w-6xl px-6 py-14">
       <div class="mb-6 flex items-end justify-between gap-4">
         <h2 class="text-2xl sm:text-3xl font-semibold text-zinc-900">From the Blog</h2>
         <a href="/blog" class="text-teal-700 font-medium hover:underline">View all →</a>

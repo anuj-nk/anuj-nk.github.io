@@ -2,7 +2,6 @@
 interface Props { class?: string }
 const { class: className = "" } = Astro.props;
 
-// Build-time env read
 const ENDPOINT: string = import.meta.env.PUBLIC_NOW_PLAYING_URL || "";
 const ID = "np_card_" + Math.random().toString(36).slice(2, 9);
 ---
@@ -73,9 +72,7 @@ const ID = "np_card_" + Math.random().toString(36).slice(2, 9);
       }
     }
 
-    // initial fetch
     load();
-    // fetch again after client-side navs (if enabled)
     document.addEventListener("astro:page-load", load);
   })();
 </script>

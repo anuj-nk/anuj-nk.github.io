@@ -1,0 +1,30 @@
+---
+interface Props {
+  items: string[];
+  speed?: number;
+  label?: string;
+}
+const { items, speed = 24, label = "Interests carousel" } = Astro.props;
+const list = (items || []).filter(Boolean);
+const doubled = [...list, ...list];
+---
+<div
+  class="group relative w-full overflow-hidden rounded-xl bg-white/70"
+  aria-label={label}
+>
+  <ul
+    class="flex w-max min-w-full flex-nowrap gap-3 py-3 pr-3 animate-marquee motion-reduce:animate-none [animation-play-state:running]"
+    style={`--marquee-duration:${speed}s`}
+    role="list"
+  >
+    {doubled.map((i, idx) => (
+      <li class="shrink-0">
+        <span
+          class="inline-flex items-center gap-2 rounded-full bg-zinc-100 px-3 py-1 text-sm text-zinc-700 ring-1 ring-zinc-200 hover:bg-teal-50 hover:text-teal-800 hover:ring-teal-200 transition"
+        >
+          {i}
+        </span>
+      </li>
+    ))}
+  </ul>
+</div>

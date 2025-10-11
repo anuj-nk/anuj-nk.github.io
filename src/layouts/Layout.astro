@@ -15,15 +15,26 @@ const { title = "Anuj" } = Astro.props;
     <ClientRouter />
   </head>
 
-  <body class="min-h-screen bg-white">
-    <!-- Persist header/footer, give them a NAME for CSS, and (optionally) a gentle fade -->
-    <Header transition:persist transition:name="chrome" transition:animate={fade({ duration: "160ms" })} />
+  <body class="min-h-screen bg-gradient-to-b from-teal-50 via-white to-stone-200 text-zinc-900">
+    <Header
+      transition:persist
+      transition:name="chrome"
+      transition:animate={fade({ duration: "160ms" })}
+    />
 
-    <!-- Name your main content 'page' and give it a slightly longer fade -->
-    <main id="page" transition:name="page" transition:animate={fade({ duration: "220ms"})} class="min-h-[60vh]">
+    <main
+      id="page"
+      transition:name="page"
+      transition:animate={fade({ duration: "220ms"})}
+      class="min-h-[60vh]"
+    >
       <slot />
     </main>
 
-    <Footer transition:persist transition:name="chrome" transition:animate={fade({ duration: "160ms" })} />
+    <Footer
+      transition:persist
+      transition:name="chrome"
+      transition:animate={fade({ duration: "160ms" })}
+    />
   </body>
 </html>
