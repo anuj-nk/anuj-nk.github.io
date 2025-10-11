@@ -4,7 +4,7 @@ description: "I am not ACTUALLY a Zombie and My Brain is not ACTUALY Goo. Anyway
 date:   2025-08-20
 tags: ["personal", "research"]
 image: "/assets/blog/brainrot.jpg"
-pinned: false
+pinned: true
 ---
 
 I was casually scrolling on my Instagram feed when I found out that stated, "Short-form content shown to be 5 times worse for brain than Alcohol" or something similar to that. "Oh No!", I cried out as I remember my days of ~10 hours of screen time. "My brain has got to be destoryed by now", I thought. That article then stuck with me for a couple days. I began trying to spend less time consuming entertainment through short-form content. Then, I randomly decided to look up that same post, and I realized that there were no sources provided in that Instagram post. What's worse is that it was posted by a notoriously misconstruable Instagram account, Pubity. I had been duped. I could not find a single credible source emplifying anything similar to what that post stated. "Oh No", I cried out. This time with a more solemn and colder demeanor. I had just fallen for blatant misinformation.
