@@ -58,6 +58,6 @@ const ID = "np_inline_" + Math.random().toString(36).slice(2, 9);
     }
 
     load();
-    document.addEventListener("astro:page-load", load);
+    document.addEventListener("astro:after-swap", load);
   })();
 </script>
