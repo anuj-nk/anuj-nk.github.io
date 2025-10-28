@@ -17,17 +17,17 @@ const ID = "np_inline_" + Math.random().toString(36).slice(2, 9);
 
 <script is:inline define:vars={{ ID, ENDPOINT }}>
   (function () {
-    const root = document.getElementById(ID);
-    if (!root) return;
-    const el = root.firstElementChild;
+    let controller = null;
 
-    function renderError(msg="Spotify unavailable") {
+    function renderError(el, msg = "Spotify unavailable") {
+      if (!el) return;
       el.innerHTML = `
         <span class="inline-block w-2 h-2 rounded-full bg-red-500"></span>
         <span class="truncate max-w-[12rem] text-red-600">${msg}</span>`;
     }
 
-    function render(data) {
+    function render(el, data) {
+      if (!el) return;
       if (!data || !data.isPlaying || !data.title) {
         el.innerHTML = `
           <span class="inline-block w-2 h-2 rounded-full bg-zinc-300"></span>
@@ -36,8 +36,7 @@ const ID = "np_inline_" + Math.random().toString(36).slice(2, 9);
       }
       const text = data.artist ? `${data.title} — ${data.artist}` : data.title;
       el.innerHTML = `
-        <a href="${data.songUrl || '#'}" target="_blank" rel="noopener"
-           class="group inline-flex items-center gap-2">
+        <a href="${data.songUrl || '#'}" target="_blank" rel="noopener" class="group inline-flex items-center gap-2">
           <span class="inline-block w-2 h-2 rounded-full bg-teal-500 animate-pulse"></span>
           <span class="truncate max-w-[12rem] group-hover:underline">${text}</span>
         </a>`;
@@ -45,19 +44,40 @@ const ID = "np_inline_" + Math.random().toString(36).slice(2, 9);
     }
 
     async function load() {
+      const root = document.getElementById(ID);
+      const el = root?.firstElementChild;
+      if (!root || !el) return;
       try {
         if (!ENDPOINT) throw new Error("Missing PUBLIC_NOW_PLAYING_URL");
-        const res = await fetch(ENDPOINT, { cache: "no-store" });
+        if (controller) controller.abort();
+        controller = new AbortController();
+
+        const res = await fetch(ENDPOINT, { cache: "no-store", signal: controller.signal });
         if (!res.ok) throw new Error("HTTP " + res.status);
         const json = await res.json();
-        render(json);
+        render(el, json);
       } catch (e) {
-        console.error("[NowPlayingInline] fetch error:", e);
-        renderError();
+        if (e.name !== "AbortError") {
+          console.error("[NowPlayingInline] fetch error:", e);
+          renderError(el);
+        }
       }
     }
 
-    load();
-    document.addEventListener("astro:after-swap", load);
+    let ticker;
+    function start() {
+      clearInterval(ticker);
+      ticker = setInterval(load, 1500); 
+    }
+
+    document.addEventListener("astro:page-load", () => {
+      load();
+      start();
+    });
+    document.addEventListener("astro:after-swap", () => {
+      load();
+      start();
+    });
   })();
 </script>
+

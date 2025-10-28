@@ -3,15 +3,21 @@ import NowPlayingCard from "../components/NowPlayingCard.astro";
 import BlogCard from "../components/BlogCard.astro";
 import { getCollection } from "astro:content";
 import InterestCarousel from "../components/InterestCarousel.astro";
+import ProjectCard from "../components/ProjectCard.astro";
 
 const posts = (await getCollection("blog")).sort(
-  (a: { data: { date: { getTime: () => number } } }, b: { data: { date: { getTime: () => number } } }) =>
-    b.data.date.getTime() - a.data.date.getTime()
+  (a : any, b : any) => b.data.date.getTime() - a.data.date.getTime()
 );
 
-const pinned = posts.filter((p: { data: { pinned: any } }) => p.data.pinned);
+const projects = (await getCollection("projects"))
+  .sort((a: any, b: any) => (b.data.featured?1:0)-(a.data.featured?1:0) || b.data.date.getTime() - a.data.date.getTime());
+
+const pinned = posts.filter((p : any) => p.data.pinned);
 const featured = pinned[0] ?? posts[0];
-const more = posts.filter((p: { slug: any }) => p.slug !== featured?.slug).slice(0, 2);
+const more = posts.filter((p : any) => p.slug !== featured?.slug).slice(0, 2);
+
+const featuredProject = projects.find((p:any) => p.data.featured) ?? projects[0];
+const moreProjects = projects.filter((p:any) => p.slug !== featuredProject?.slug).slice(0, 2);
 
 const me = {
   name: "Anuj Kamasamudram",
@@ -24,94 +30,123 @@ const me = {
     { label: "Email", href: "mailto:anujkamasamudram@gmail.com" },
     { label: "Blog", href: "/blog" },
   ],
-  workingOn: [
-    "Mooncake Plaster Designs",
-    "Personal site haha",
-    "Projects Section of Site"
-  ],
+  workingOn: ["Projects Section of Site", "Mooncake Holder", "Mobile Adaptivity of Site"],
   interests: ["Basketball", "Music", "Dosa", "Gaming", "Business", "Ice Cream", "Coffee", "Cooking", "Blogging", "Programming", "AI and Policy"],
   songFormUrl: "https://forms.gle/F27gKxA4T4HxEvEr6"
 };
 ---
 
 <main class="relative z-10 min-h-screen">
-  <section class="relative mx-auto max-w-5xl px-6 pt-6">
-
-  <div class="grid gap-6 md:grid-cols-2 rounded-2xl ring-1 ring-black/10 bg-white/70 backdrop-blur shadow-lg p-6 sm:p-8">
-    <div class="flex flex-col gap-5">
-      <img
-          src={me.photo}
-          alt={`Photo of ${me.name}`}
-          class="h-40 w-40 sm:h-28 sm:w-28 md:h-50 md:w-120 rounded-2xl object-cover ring-1 ring-black/10 shadow"
-          width="144"
-          height="144"
-          loading="eager"
-          decoding="async"
-        />
-      <div class="flex items-center gap-5">
-        <div>
-          <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900">{me.name}</h1>
-          <p class="mt-1 text-sm sm:text-base text-zinc-600">{me.tagline}</p>
+  <!-- INTRO CARD -->
+  <section class="relative mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 pt-[max(env(safe-area-inset-top),1rem)]">
+    <div
+      class="grid gap-5 md:grid-cols-2 rounded-2xl ring-1 ring-black/10 bg-white/70 backdrop-blur-md shadow-lg p-4 sm:p-6 md:p-8 overflow-auto"
+    >
+      <!-- Left column -->
+      <div class="flex flex-col gap-5">
+      <!-- Wide, short banner-style image -->
+      <div class="w-full rounded-2xl overflow-hidden ring-1 ring-black/10 shadow">
+        <div class="aspect-[16/9] sm:aspect-[4/3] md:aspect-[5/3]">
+          <img
+            src={me.photo}
+            alt={`Photo of ${me.name}`}
+            class="w-full h-full object-cover object-center"
+            width="1200"
+            height="675"
+            loading="eager"
+            decoding="async"
+          />
         </div>
       </div>
+
+      <!-- Name + tagline under the image -->
+      <div>
+        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900">{me.name}</h1>
+        <p class="mt-1 text-sm sm:text-base text-zinc-600">{me.tagline}</p>
+      </div>
+
+      <!-- Interests -->
       <InterestCarousel items={me.interests} speed={22} />
 
+      <!-- Bigger, responsive buttons -->
       <div class="flex flex-wrap gap-3 pt-1">
         {me.links.map((l) => (
-          <a href={l.href} class="inline-flex items-center rounded-lg px-3 py-2 text-sm font-medium text-white bg-teal-600 hover:bg-teal-700">
+          <a
+            href={l.href}
+            class="inline-flex items-center rounded-lg px-3 py-2 text-sm sm:px-4 sm:py-2.5 sm:text-base font-medium text-white bg-teal-600 hover:bg-teal-700"
+          >
             {l.label}
           </a>
         ))}
       </div>
     </div>
 
-    <div class="flex flex-col gap-4">
-      <div class="rounded-xl ring-1 ring-black/10 bg-white/80 p-4">
-        <NowPlayingCard />
-      </div>
 
-      <div class="rounded-xl ring-1 ring-black/10 bg-white/80 p-4">
-        <h3 class="mb-2 text-sm font-semibold text-zinc-700">Suggest a song</h3>
-        <p class="text-sm text-zinc-600 mb-3">Improve my Music Taste</p>
-        <div class="flex gap-2">
-          <input
-            type="text"
-            placeholder="Song or Spotify link"
-            class="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-          />
-          <a href={me.songFormUrl} class="rounded-lg bg-teal-600 px-3 py-2 text-sm font-medium text-white hover:bg-teal-700">
-            Send
-          </a>
+      <!-- Right column -->
+      <div class="flex flex-col gap-4">
+        <div class="rounded-xl ring-1 ring-black/10 bg-white/80 p-4">
+          <NowPlayingCard />
+        </div>
+
+        <div class="rounded-xl ring-1 ring-black/10 bg-white/80 p-4">
+          <h3 class="mb-1.5 text-sm font-semibold text-zinc-700">Suggest a song</h3>
+          <p class="text-sm text-zinc-600 mb-3">Improve my Music Taste</p>
+          <form class="flex flex-col sm:flex-row gap-2">
+            <input
+              type="text"
+              placeholder="Song or Spotify link"
+              class="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              name="song"
+              inputmode="text"
+            />
+            <a
+              href={me.songFormUrl}
+              class="inline-flex shrink-0 items-center justify-center rounded-lg bg-teal-600 px-3 py-2 text-sm font-medium text-white hover:bg-teal-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
+            >
+              Send
+            </a>
+          </form>
+        </div>
+
+        <div class="rounded-xl ring-1 ring-black/10 bg-white/80 p-4">
+          <h3 class="mb-2 text-sm font-semibold text-zinc-700">Working on rn</h3>
+          <ul class="space-y-2">
+            {me.workingOn.map((w) => (
+              <li class="flex items-start gap-2">
+                <span class="mt-2 h-1.5 w-1.5 rounded-full bg-teal-500"></span>
+                <span class="text-sm text-zinc-700">{w}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
-
-      <div class="rounded-xl ring-1 ring-black/10 bg-white/80 p-4">
-        <h3 class="mb-2 text-sm font-semibold text-zinc-700">Working on rn</h3>
-        <ul class="space-y-2">
-          {me.workingOn.map((w) => (
-            <li class="flex items-start gap-2">
-              <span class="mt-1 h-1.5 w-1.5 rounded-full bg-teal-500"></span>
-              <span class="text-sm text-zinc-700">{w}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
     </div>
-  </div>
   </section>
 
+  {featuredProject && (
+  <section class="relative mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-12 lg:py-14">
+    <div class="mb-5 sm:mb-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+      <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-zinc-900">Recent Projects</h2>
+      <a href="/projects" class="self-start sm:self-auto text-teal-700 font-medium hover:underline">View all →</a>
+    </div>
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <ProjectCard project={featuredProject} />
+      {moreProjects.map((p:any) => <ProjectCard project={p} />)}
+    </div>
+  </section>
+  )}
 
-
+  <!-- BLOG PREVIEW -->
   {featured && (
-    <section id="from-the-blog" class="relative mx-auto max-w-6xl px-6 py-14">
-      <div class="mb-6 flex items-end justify-between gap-4">
-        <h2 class="text-2xl sm:text-3xl font-semibold text-zinc-900">From the Blog</h2>
-        <a href="/blog" class="text-teal-700 font-medium hover:underline">View all →</a>
+    <section id="from-the-blog" class="relative mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-12 lg:py-14">
+      <div class="mb-5 sm:mb-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+        <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-zinc-900">From the Blog</h2>
+        <a href="/blog" class="self-start sm:self-auto text-teal-700 font-medium hover:underline">View all →</a>
       </div>
 
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         <BlogCard post={featured} />
-        {more.map((p: unknown) => <BlogCard post={p} />)}
+        {more.map((p: any) => <BlogCard post={p} />)}
       </div>
     </section>
   )}

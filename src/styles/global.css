@@ -30,3 +30,7 @@ iframe.giscus-frame { view-transition-name: none; }
     will-change: transform;
   }
 }
+
+html {
+  scrollbar-gutter: stable both-edges;
+}

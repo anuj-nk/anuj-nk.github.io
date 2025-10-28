@@ -1,0 +1,76 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const all = (await getCollection('projects')).sort((a: any, b: any) =>
+  (b.data.pinned ? 1 : 0) - (a.data.pinned ? 1 : 0) || b.data.date.getTime() - a.data.date.getTime()
+);
+
+// query params
+const tag = Astro.url.searchParams.get('tag') ?? '';
+const status = Astro.url.searchParams.get('status') ?? '';
+const q = (Astro.url.searchParams.get('q') ?? '').toLowerCase();
+
+const filtered = all.filter(({ data }: any) => {
+  const tagOk = tag ? data.tags?.map((t: string) => t.toLowerCase()).includes(tag.toLowerCase()) : true;
+  const statusOk = status ? data.status === status : true;
+  const qOk = q
+    ? (data.title + ' ' + (data.summary ?? '') + ' ' + (data.org ?? '') + ' ' + (data.tags ?? []).join(' ')).toLowerCase().includes(q)
+    : true;
+  return tagOk && statusOk && qOk;
+});
+
+// pagination
+const pageSize = 9;
+const page = Number(Astro.url.searchParams.get('page') ?? 1);
+const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+const paginated = filtered.slice((page - 1) * pageSize, page * pageSize);
+
+// collect tag/status facets
+const tags = Array.from(new Set(all.flatMap((p: any) => p.data.tags ?? []))).sort();
+const statuses = ["planning","in-progress","paused","completed"];
+---
+
+<Layout title="Projects">
+  <section class="mx-auto max-w-6xl px-6 py-14">
+    <header class="mb-8">
+      <h1 class="text-4xl font-extrabold text-zinc-900 text-center">Projects</h1>
+      <p class="mt-3 text-center text-zinc-600">Selected work across school, startup, and tinkering.</p>
+    </header>
+
+    <!-- Controls -->
+    <form class="mb-8 grid gap-3 sm:grid-cols-3">
+      <input
+        type="search" name="q" value={q}
+        placeholder="Search projects…"
+        class="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+      />
+      <select name="tag" class="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm focus:ring-2 focus:ring-teal-500">
+        <option value="">All tags</option>
+        {tags.map((t) => <option value={t} selected={t===tag}>{t}</option>)}
+      </select>
+      <select name="status" class="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm focus:ring-2 focus:ring-teal-500">
+        <option value="">Any status</option>
+        {statuses.map((s) => <option value={s} selected={s===status}>{s}</option>)}
+      </select>
+    </form>
+
+    <!-- Grid -->
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {paginated.map((p: any) => <ProjectCard project={p} />)}
+    </div>
+
+    <!-- Pagination -->
+    {totalPages > 1 && (
+      <nav class="mt-12 flex justify-center gap-2">
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((i) => (
+          <a
+            href={`/projects?${new URLSearchParams({ q, tag, status, page: String(i) })}`}
+            class={`rounded px-3 py-1 text-sm ${i===page ? 'bg-teal-600 text-white' : 'bg-zinc-100 text-zinc-800'}`}
+          >{i}</a>
+        ))}
+      </nav>
+    )}
+  </section>
+</Layout>

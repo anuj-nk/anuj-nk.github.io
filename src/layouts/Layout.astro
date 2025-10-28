@@ -4,7 +4,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { ClientRouter, fade } from "astro:transitions";
 
-const { title = "Anuj" } = Astro.props;
+const { title = "Anuj", overlapHeader = false } = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
@@ -15,11 +15,12 @@ const { title = "Anuj" } = Astro.props;
     <ClientRouter />
   </head>
 
-  <body class="min-h-screen bg-gradient-to-b from-teal-50 via-white to-stone-200 text-zinc-900">
+  <body class="min-h-screen bg-gradient-to-b from-teal-50 via-white to-stone-200 text-zinc-900 {overlapHeader ? 'has-overlap-header' : ''}">
     <Header
       transition:persist
       transition:name="chrome"
       transition:animate={fade({ duration: "160ms" })}
+      overlap={overlapHeader}
     />
 
     <main

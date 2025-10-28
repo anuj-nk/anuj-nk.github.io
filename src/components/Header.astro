@@ -1,7 +1,16 @@
 ---
 import NowPlayingInline from "../components/NowPlayingInline.astro";
+const { overlap = false } = Astro.props;
+
+const current = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const nav = [
+  { href: "/", label: "Home" },
+  { href: "/projects", label: "Projects" },
+  { href: "/blog", label: "Blog" },
+  { href: "/about", label: "About" },
+];
 ---
-<header class="sticky top-0 z-50 bg-transparent">
+<header class={`${overlap ? 'absolute' : 'sticky'} top-0 z-50 w-full bg-transparent`}>
   <div class="flex items-center justify-between px-24 py-12 max-sm:px-5 max-sm:py-10 w-full">
     <a href="/" class="flex items-center gap-x-4" aria-label="Home">
       <p class="uppercase text-3xl text-zinc-900">anuj</p>
@@ -9,9 +18,21 @@ import NowPlayingInline from "../components/NowPlayingInline.astro";
     <div class="flex items-center gap-6">
       <NowPlayingInline class="hidden sm:inline-flex max-w-[16rem]" />
       <ul class="flex gap-x-8" id="site-nav">
-        <li><a href="/" class="navlink">Home</a></li>
-        <li><a href="/blog" class="navlink">Blog</a></li>
-        <li><a href="/about" class="navlink">About</a></li>
+        {nav.map(({ href, label }) => {
+          const isActive =
+            current === href || (href !== "/" && current.startsWith(href + "/"));
+          return (
+            <li>
+              <a
+                href={href}
+                class={`navlink ${isActive ? "text-zinc-900 font-semibold" : ""}`}
+                aria-current={isActive ? "page" : undefined}
+              >
+                {label}
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </div>
   </div>
