@@ -7,7 +7,6 @@ const all = (await getCollection('projects')).sort((a: any, b: any) =>
   (b.data.pinned ? 1 : 0) - (a.data.pinned ? 1 : 0) || b.data.date.getTime() - a.data.date.getTime()
 );
 
-// query params
 const tag = Astro.url.searchParams.get('tag') ?? '';
 const status = Astro.url.searchParams.get('status') ?? '';
 const q = (Astro.url.searchParams.get('q') ?? '').toLowerCase();
@@ -21,13 +20,11 @@ const filtered = all.filter(({ data }: any) => {
   return tagOk && statusOk && qOk;
 });
 
-// pagination
 const pageSize = 9;
 const page = Number(Astro.url.searchParams.get('page') ?? 1);
 const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
 const paginated = filtered.slice((page - 1) * pageSize, page * pageSize);
 
-// collect tag/status facets
 const tags = Array.from(new Set(all.flatMap((p: any) => p.data.tags ?? []))).sort();
 const statuses = ["planning","in-progress","paused","completed"];
 ---
@@ -36,10 +33,9 @@ const statuses = ["planning","in-progress","paused","completed"];
   <section class="mx-auto max-w-6xl px-6 py-14">
     <header class="mb-8">
       <h1 class="text-4xl font-extrabold text-zinc-900 text-center">Projects</h1>
-      <p class="mt-3 text-center text-zinc-600">Selected work across school, startup, and tinkering.</p>
+      <p class="mt-3 text-center text-zinc-600">Selected work across school and personal.</p>
     </header>
 
-    <!-- Controls -->
     <form class="mb-8 grid gap-3 sm:grid-cols-3">
       <input
         type="search" name="q" value={q}
@@ -56,12 +52,10 @@ const statuses = ["planning","in-progress","paused","completed"];
       </select>
     </form>
 
-    <!-- Grid -->
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {paginated.map((p: any) => <ProjectCard project={p} />)}
     </div>
 
-    <!-- Pagination -->
     {totalPages > 1 && (
       <nav class="mt-12 flex justify-center gap-2">
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((i) => (
