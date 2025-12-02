@@ -1,16 +1,15 @@
 ---
 title: "DeskFlex: the future of cable managment"
 date: 2025-12-01
-updated: 2025-10-29
-summary: "Make the Projects section of my website"
-image: "/assets/projects/Project.jpg"
-tags: ["Astro"]
+updated: 2025-12-02
+summary: "Site for TECHIN 511 Project"
+image: "/assets/projects/DeskFlex.png"
+tags: ["Prototyping", "Fabrication"]
 status: "in-progress"
-role: "Developer"
-org: "Me"
-repo: "https://github.com/anuj-nk/anuj-nk.github.io"
+role: "Prototyper"
+org: "TECHIN 511 Group 14"
 pinned: true
 featured: true
 ---
 
-This is just a test to make sure the Project section is working.
+Body
