@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro"
+import { me } from "../data/me";
 ---
 
 <Layout title="About">
@@ -35,21 +36,17 @@ import Layout from "../layouts/Layout.astro"
 
         <section class="mt-10" aria-labelledby="contact">
           <h2 id="contact" class="text-2xl font-semibold text-zinc-900 mb-4">Get in touch</h2>
-          <div class="flex flex-col sm:flex-row gap-3 justify-center">
-            <a
-              href="mailto:anujkamasamudram@gmail.com"
-              class="inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2"
-            >
-              Email
-            </a>
+          <div class="flex flex-wrap gap-3 justify-center">
+            {me.links.map((l) => (
+              <a
+                href={l.href}
+                class="inline-flex items-center rounded-lg px-3 py-2 text-sm sm:px-4 sm:py-2.5 sm:text-base font-medium text-white bg-teal-600 hover:bg-teal-700"
+              >
+                {l.label}
+              </a>
+            ))}
           </div>
         </section>
-
-        <figure class="mt-12">
-          <blockquote class="italic text-zinc-500">
-            Check out my socials linked in the footer
-          </blockquote>
-        </figure>
       </div>
     </section>
   </main>

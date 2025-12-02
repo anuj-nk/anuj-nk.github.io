@@ -67,18 +67,6 @@ const me = {
 
       <!-- Interests -->
       <InterestCarousel items={me.interests} speed={22} />
-
-      <!-- Bigger, responsive buttons -->
-      <div class="flex flex-wrap gap-3 pt-1">
-        {me.links.map((l) => (
-          <a
-            href={l.href}
-            class="inline-flex items-center rounded-lg px-3 py-2 text-sm sm:px-4 sm:py-2.5 sm:text-base font-medium text-white bg-teal-600 hover:bg-teal-700"
-          >
-            {l.label}
-          </a>
-        ))}
-      </div>
     </div>
 
 
