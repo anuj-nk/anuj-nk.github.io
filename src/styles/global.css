@@ -1,5 +1,7 @@
 /* Global.css */
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
 
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*) { animation-duration: 1ms; }
@@ -30,6 +32,32 @@ iframe.giscus-frame { view-transition-name: none; }
     will-change: transform;
   }
 }
+
+@layer base {
+  /* Default body font */
+  html {
+    font-family: "Satoshi", sans-serif;
+  }
+
+  /* Bold, branded headings */
+  h1, h2, h3, h4 {
+    font-family: "Clash Display", sans-serif !important;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Blog + Project prose content */
+@layer components {
+  .prose {
+    font-family: "Satoshi", sans-serif;
+  }
+
+  .prose h1, .prose h2, .prose h3, .prose h4 {
+    font-family: "Clash Display", sans-serif;
+  }
+}
+
+
 
 html {
   scrollbar-gutter: stable both-edges;

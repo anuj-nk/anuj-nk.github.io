@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 const project = await (await import('astro:content')).getEntry('projects', slug);
 const { Content } = await project.render();
-const { title, date, updated, image, summary, tags, status, role, org, repo, demo } = project.data;
+const { title, date, updated, image, summary, tags, status, role, org, repo, demo, tagline } = project.data;
 ---
 
 <Layout title={title} description={summary} overlapHeader={false}>
@@ -31,13 +31,18 @@ const { title, date, updated, image, summary, tags, status, role, org, repo, dem
 
 
   <!-- Body -->
-  <article class="relative mx-auto max-w-3xl px-6 pb-20 pt-10">
+  <article class="relative mx-auto max-w-4xl px-6 pb-20 pt-10">
     <a href="/projects" class="inline-flex items-center gap-2 rounded-lg border border-zinc-200 px-3 py-1.5 text-sm text-zinc-700 hover:bg-white/60">
       ← Back to Projects
     </a>
 
     <header class="mt-6 mb-6">
       <h1 class="text-4xl font-bold tracking-tight text-zinc-900">{title}</h1>
+      {tagline && (
+        <p class="mt-1 text-xl font-semibold text-zinc-700 tracking-tight">
+          {tagline}
+        </p>
+      )}
       <div class="mt-2 flex flex-wrap items-center gap-3 text-[0.92rem] text-zinc-500">
         <time>{date.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' })}</time>
         {updated && <span>• Updated {updated.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' })}</span>}
