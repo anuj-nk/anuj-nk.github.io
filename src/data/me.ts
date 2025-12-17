@@ -9,7 +9,7 @@ export const me = {
     { label: "Email", href: "mailto:anujkamasamudram@gmail.com" },
     { label: "LinkedIn", href: "https://linkedin.com/in/anuj-kamasamudram"}
   ],
-  workingOn: ["Projects Section of Site", "Mooncake Holder", "Mobile Adaptivity of Site"],
+  workingOn: ["Reading more books", "Mobile Adaptivity of Site", "Better Interesting Blog Posts"],
   interests: [
     "Basketball",
     "Music",
