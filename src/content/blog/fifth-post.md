@@ -6,6 +6,7 @@ tags: ["announcement", "research"]
 image: "/assets/blog/prime.jpg" 
 pinned: false 
 ---
+
 As the title and description imply, the FTC has ordered Amazon to pay a total of $2.5 billion in redress and civil penalties for its improper handling of Prime memberships. This ruling responds to Amazon’s predatory practices misleading consumers into purchasing Prime subscriptions and deliberately making it difficult to cancel them. It’s the latest in a series of cases where the FTC has sought to stop exploitative corporate behavior. A notable example is Ticketmaster, where the FTC found that the company failed to enforce purchase limits, allowing scalpers to drive up prices on the resale market.  
 
 <br>

@@ -4,6 +4,7 @@ import BlogCard from "../components/BlogCard.astro";
 import { getCollection } from "astro:content";
 import InterestCarousel from "../components/InterestCarousel.astro";
 import ProjectCard from "../components/ProjectCard.astro";
+import { me } from "../data/me";
 
 const posts = (await getCollection("blog")).sort(
   (a : any, b : any) => b.data.date.getTime() - a.data.date.getTime()
@@ -19,21 +20,8 @@ const more = posts.filter((p : any) => p.slug !== featured?.slug).slice(0, 2);
 const featuredProject = projects.find((p:any) => p.data.featured) ?? projects[0];
 const moreProjects = projects.filter((p:any) => p.slug !== featuredProject?.slug).slice(0, 2);
 
-const me = {
-  name: "Anuj Kamasamudram",
-  tagline: "UW MSTI student",
-  email: "mailto:anujkamasamudram@gmail.com",
-  resumeUrl: "/assets/resume.pdf",
-  photo: "/assets/home/me.jpeg",
-  links: [
-    { label: "Resume", href: "/assets/resume.pdf" },
-    { label: "Email", href: "mailto:anujkamasamudram@gmail.com" },
-    { label: "Blog", href: "/blog" },
-  ],
-  workingOn: ["Projects Section of Site", "Mooncake Holder", "Mobile Adaptivity of Site"],
-  interests: ["Basketball", "Music", "Dosa", "Gaming", "Business", "Ice Cream", "Coffee", "Cooking", "Blogging", "Programming", "AI and Policy"],
-  songFormUrl: "https://forms.gle/F27gKxA4T4HxEvEr6"
-};
+const songs = await getCollection("weeklySongs");
+const songOfWeek = songs.sort((a, b) => b.data.weekOf.getTime() - a.data.weekOf.getTime())[0];
 ---
 
 <main class="relative z-10 min-h-screen">

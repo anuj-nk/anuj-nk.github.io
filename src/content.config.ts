@@ -43,4 +43,17 @@ const projects = defineCollection({
 });
 
 
-export const collections = { blog, projects };
+const weeklySongs = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    artist: z.string().optional(),
+    spotifyUrl: z.string().url().optional(),
+    youtubeUrl: z.string().url().optional(),
+    weekOf: z.date(), // used to pick “current” song
+    blurb: z.string().optional(),
+    cover: z.string().optional(),
+  }),
+});
+
+export const collections = { blog, projects, weeklySongs };
