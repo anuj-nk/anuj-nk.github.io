@@ -11,8 +11,8 @@ role: "Developer"
 org: "TECHIN 512"
 repo: "https://github.com/anuj-nk/SpaceShip"
 demo: "https://youtu.be/w6c5_t6dV1k"
-featured: true
-pinned: true
+featured: false
+pinned: false
 ---
 
 Here I have provided the Github Repo for all the documentation for the code for this project. I have also provided a video demo of the project working as a game.
